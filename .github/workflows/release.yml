@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
+    - name: Checkout Code
+      uses: actions/checkout@v6
     - name: Configure GitHub Environment
       run: |
         git rev-list --count HEAD >> $GITHUB_ENV
         echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-    - name: Checkout Code
-      uses: actions/checkout@v6
 
     - name: Prepare Release Archive
       run: |
