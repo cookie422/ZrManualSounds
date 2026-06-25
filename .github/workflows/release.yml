@@ -7,22 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v6
-    - name: Configure GitHub Environment
-      run: |
-        git rev-list --count HEAD >> $GITHUB_ENV
-        echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        
+      - name: Configure GitHub Environment
+        run: |
+          git rev-list --count HEAD >> $GITHUB_ENV
+          echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-    - name: Prepare Release Archive
-      run: |
-        cd download
-        zip -r ZR-Delxue.zip .
+      - name: Prepare Release Archive
+        run: |
+          cd download
+          zip -r ZR-Delxue.zip .
 
-    - name: Release
-      uses: softprops/action-gh-release@v2
-      with:
-        files: download/ZR-Delxue.zip
-        tag_name: release-${{ env.SHA_SHORT }}
-        body: |
-            ${{ github.event.head_commit.message }}
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: download/ZR-Delxue.zip
+          tag_name: release-${{ env.SHA_SHORT }}
+          body: |
+              ${{ github.event.head_commit.message }}
